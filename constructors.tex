@@ -1,0 +1,26 @@
+\subsection{Initialization}
+
+\begin{itemize}
+	\item initialize everything with reasonable values
+	\item some std classes do not need to be initialized specifically to have default values 
+	
+	(i.e. \mintinline{cpp}{std::string s; // initializes empty string automatically})
+\end{itemize}
+
+\subsection{Constructors}
+
+\begin{itemize}
+
+	\item use the constructor of classes to initialize values if possible
+	\item use the constructor initializer lists
+	\begin{minted}{cpp}
+	Auto::Auto(double power, double speed)
+	 : power_(power)
+	 , speed_(speed)
+	\end{minted}
+	
+	\item in C++ 14 initialization of standard types can be done in the header file:
+	\begin{minted}{cpp}
+	...
+	\end{minted}
+\end{itemize}

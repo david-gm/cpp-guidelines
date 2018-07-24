@@ -1,0 +1,10 @@
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc
+_minted-cpp-intro/
+*.o
+*.swp
+main
+*.tdo

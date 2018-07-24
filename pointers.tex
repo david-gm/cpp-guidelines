@@ -1,0 +1,57 @@
+\paragraph{Example 1 - Memory Leak}
+	
+	\begin{listing}[!htbp]
+		\begin{minipage}[t]{0.45\textwidth}
+			\inputminted{cpp}{src/pointers/ex-1/MyClass.h}
+		\end{minipage}\hfill
+		\begin{minipage}[t]{0.45\textwidth}
+			\inputminted{cpp}{src/pointers/ex-1/MyClass.cpp}
+		\end{minipage}
+		\caption{Example 1: MyClass.h \& MyClass.cpp}
+	\end{listing}
+
+	A pointer in \ttt{MyClass} is created in the constructor (\ttt{MyClass::MyClass()}), but never deleted; as soon as the destructor of \ttt{MyClass} is called (see scope in main), the pointer has to be deleted, but this never happens. On the contrary, if the std::string pointer is deleted in the destructor, p outside the limited scope (line 13) cannot be accessed anymore (see next example).
+	
+	\inputminted{cpp}{src/pointers/ex-1/main.cpp}
+	
+	\begin{minted}{bash}
+		valgrind --tool=memcheck --leak-check=full ./main
+		
+		==1485== HEAP SUMMARY:
+		==1485==     in use at exit: 32 bytes in 1 blocks
+		==1485==   total heap usage: 3 allocs, 2 frees, 73,760 bytes allocated
+		==1485== 
+		==1485== 32 bytes in 1 blocks are definitely lost in loss record 1 of 1
+		==1485==    at 0x4C3017F: operator new(unsigned long) (vg_replace_malloc.c:334)
+		==1485==    by 0x108E9F: MyClass::MyClass() (in /home/david/projects/cpp-intro/src/pointers/ex-1/main)
+		==1485==    by 0x108D4D: main (in /home/david/projects/cpp-intro/src/pointers/ex-1/main)
+		==1485== 
+		==1485== LEAK SUMMARY:
+		==1485==    definitely lost: 32 bytes in 1 blocks
+		==1485==    indirectly lost: 0 bytes in 0 blocks
+		==1485==      possibly lost: 0 bytes in 0 blocks
+		==1485==    still reachable: 0 bytes in 0 blocks
+		==1485==         suppressed: 0 bytes in 0 blocks
+	\end{minted}
+	
+	\paragraph{Example 2 - Segmentation Fault}
+	
+	To produce no memory leaks, the allocated memory for \ttt{std::string} is cleaned in the destructor of \ttt{MyClass}. However, a segfault is created, as soon as the pointer points to memory, where no data is assigned anymore (see example below);
+	
+	\begin{listing}[!htbp]
+		\begin{minipage}[t]{0.45\textwidth}
+			\inputminted{cpp}{src/pointers/ex-2/MyClass.h}
+		\end{minipage}\hfill
+		\begin{minipage}[t]{0.45\textwidth}
+			\inputminted{cpp}{src/pointers/ex-2/MyClass.cpp}
+		\end{minipage}
+		\caption{Example 2: MyClass.h \& MyClass.cpp}
+	\end{listing}
+
+	\inputminted{cpp}{src/pointers/ex-2/main.cpp}
+	
+	\begin{minted}{bash}
+	david@david-pc:~/projects/cpp-intro/src/pointers/ex-2 $ ./main 
+	abc
+	Segmentation fault (core dumped)
+	\end{minted}

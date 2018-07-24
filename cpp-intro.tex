@@ -1,0 +1,139 @@
+\documentclass[
+10pt,
+a4paper,
+parskip=half,	% space between parapraphs
+DIV=0,			% bigger margins
+BCOR=10mm
+]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{a4wide}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{lmodern}
+\usepackage{minted}
+\usepackage{tabularx}
+\usepackage[final]{pdfpages}
+\usepackage{framed}
+\usepackage{url}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+
+% tables ------
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{hhline} % alternative to cline in tables
+\usepackage{ltablex} % for tables longer than one page, enables page-break
+% -------------
+
+% add space after \paragraph{}
+\makeatletter
+\renewcommand\paragraph{%
+	\@startsection{paragraph}{4}{0mm}%
+	{-\baselineskip}%
+	{.5\baselineskip}%
+	{\normalfont\normalsize\bfseries}}
+\makeatother
+%-------------------------------------
+
+
+\author{David Gmeindl}
+
+%------------- begin scrheadings style ---------------------
+\makeatletter
+
+\usepackage{scrlayer-scrpage} %%  advanced page style using KOMA
+\pagestyle{scrheadings}
+\automark[section]{section} % sets headmark
+\ihead*{\headmark}
+\chead*{}
+\ohead*{TeleConsult-Austria}
+\ofoot*{\@author}
+\KOMAoptions{
+	headsepline = true,
+	footsepline = true,
+	plainfootsepline = true
+}
+
+\makeatother
+%------------- end scrheadings style -----------------------
+
+% pdf editing -----
+\usepackage[pdftex,plainpages=false]{hyperref}
+\hypersetup{%
+	hidelinks=true,
+	colorlinks=false,
+	linkcolor=green,
+	pdfstartview=FitV} % PDF-Viewer benutzt beim Start bestimmte Seitenbreite
+% -----------------
+
+\usepackage{tcolorbox}	% i.e.: \begin{tcolorbox}[breakable,notitle,boxrule=0.5pt,colback=green!20,colframe=black!90] ... \end{tcolorbox}
+
+\pagestyle{empty}
+\title{C++ Introduction}
+
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newenvironment{notebox}[1]{
+	\begin{tcolorbox}[notitle,boxrule=0.5pt,colframe=black!90]
+		#1}
+	{\end{tcolorbox}}
+
+% definition of language for inclusion of external files
+
+\setminted[bash]{tabsize=4,linenos,autogobble,frame=lines,breaklines,breakanywhere=true,fontsize=\footnotesize}
+\setminted[cpp]{tabsize=4,linenos,autogobble,frame=lines,breaklines,breakanywhere=true,fontsize=\footnotesize}
+
+\begin{document}
+	
+	
+	\pagestyle{empty}
+	\maketitle
+	\tableofcontents
+	%\listoftodos[Notes]
+	\thispagestyle{empty}
+	
+	\newpage
+	\pagebreak
+	
+	\pagestyle{scrheadings}
+	
+\section{Style}
+\input{style}
+	
+\section{Constructors \& intitializations}
+	
+\input{constructors}
+	
+\section{Classes vs Data-Containers}
+	
+\pagebreak
+\section{Pointers}
+\input{pointers}
+	
+\section{Smart Pointers}
+	
+\section{Programming idioms}
+	\subsection{Resource acquisition is initialization (RAII)}
+	
+	\url{https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization}
+	
+	\subsection{Rule of three (five, zero)}
+	
+	\url{https://en.cppreference.com/w/cpp/language/rule_of_three}
+	
+
+\section{Std libraries}
+	
+	\url{http://www.cplusplus.com/reference/std/}
+	
+	\paragraph{algorithm}
+	
+	i.e. \ttt{find\_if}
+	\inputminted{cpp}{src/algorithm/ex-1/main.cpp}
+	
+	i.e. \ttt{unique}
+	\inputminted{cpp}{src/algorithm/ex-2/main.cpp}
+	
+\end{document}
