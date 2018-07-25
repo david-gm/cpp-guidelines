@@ -7,20 +7,58 @@
 	(i.e. \mintinline{cpp}{std::string s; // initializes empty string automatically})
 \end{itemize}
 
-\subsection{Constructors}
+\subsection{Constructors \& Destructors}
 
+\paragraph{Constructors}
 \begin{itemize}
 
 	\item use the constructor of classes to initialize values if possible
 	\item use the constructor initializer lists
 	\begin{minted}{cpp}
-	Auto::Auto(double power, double speed)
+	Auto::Auto(double power, double speed, std::string name)
 	 : power_(power)
 	 , speed_(speed)
+	 , name_(name)
+	{}
 	\end{minted}
 	
-	\item in C++ 14 initialization of standard types can be done in the header file:
+	\item in initializer lists the order is important
+	\item in C++ 11 initialization of standard types can be done in the header file:
 	\begin{minted}{cpp}
-	...
+	class Auto {
+	private:
+		double power_ = 0.0;
+		double speed_ = 0.0;
+		std::string name_ = "Audi R8";
+	}
 	\end{minted}
+	
+	\item if no constructor is defined, the compiler provides a standard constructor
+	\item for container types (\url{http://www.cplusplus.com/reference/stl/}), a standard constructor has to be defined. The following would not work:
+	
+	\begin{minipage}[t]{0.4\textwidth}
+		\inputminted{cpp}{src/constructors/ex-1/main.cpp}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.4\textwidth}
+		\inputminted{cpp}{src/constructors/ex-1/ConstructorClass.h}
+	\end{minipage}
+
+	\item as soon as dynamic types (pointers) are part of a class, a self-written constructor, copy-constructor \& destructor is advised to handle the pointer data correctly
+
+	\item special types of constructors:
+	\begin{itemize}
+		\item copy constructor
+		\item move constructor
+	\end{itemize}
+
+	\item see rule of three below (section \ref{subsec:rule-of-three})
+\end{itemize}
+
+\paragraph{Destructors}
+
+\begin{itemize}
+	\item 
+	\begin{tcolorbox}[notitle,boxrule=0.5pt,colback=red!20,colframe=black!90]
+		\textbf{NOTE:} A destructor should be defined as soon as dynamic types are part of the class. 
+	\end{tcolorbox}
 \end{itemize}
