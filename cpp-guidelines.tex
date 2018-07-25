@@ -99,14 +99,49 @@ BCOR=10mm
 	
 	\pagestyle{scrheadings}
 	
-\section{Style}
+\section{Style \& Guidelines}
 \input{style}
 	
 \section{Constructors \& intitializations}
 	
 \input{constructors}
-	
+
 \section{Classes vs Data-Containers}
+
+\begin{itemize}
+	\item use a struct only for passive objects that carry data
+	\item everything else is a class
+	\item \ttt{structs} should be used for passive objects that carry data, and may have associated constants, but lack any functionality other than access/setting the data members. The accessing/setting of fields is done by directly accessing the fields rather than through method invocations. Methods should not provide behavior but should only be used to set up the data members, e.g., constructor, destructor, initialize(), reset(), validate().
+	\item If more functionality is required, a \ttt{class} is more appropriate.
+	\item Note: naming conventions of members are different (\_ after private member in class)
+	\item Classes should always encapsulate as much data as needed to ease the handling with the class from the outside: clean interfaces
+\end{itemize}
+
+\newpage
+\paragraph{Examples}
+
+\begin{listing}[htbp]
+	\begin{minted}{cpp}
+	struct Saturation
+	{
+		bool active      = false;
+		double threshold = 1.0e99;
+		
+		inline bool operator==(const Saturation &rhs) const
+		{
+			return ((active == rhs.active) && (threshold == rhs.threshold));
+		}
+		
+		inline bool operator!=(const Saturation &rhs) const { return !operator==(rhs); }
+	};
+	\end{minted}
+	\caption{Data container struct}
+\end{listing}
+
+\begin{listing}[htbp]
+	\inputminted{cpp}{src/classes-structs/ReceiverPath.h}
+	\caption{Class}
+\end{listing}
 	
 \pagebreak
 \section{Pointers}

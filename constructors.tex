@@ -12,6 +12,9 @@
 \paragraph{Constructors}
 \begin{itemize}
 
+	\item avoid initialization that can fail if you can't signal an error:
+	
+	There is no easy way for constructors to signal errors, short of crashing the program (not always appropriate) or using exceptions.
 	\item use the constructor of classes to initialize values if possible
 	\item use the constructor initializer lists
 	\begin{minted}{cpp}

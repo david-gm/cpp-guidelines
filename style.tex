@@ -1,7 +1,52 @@
-\subsection{Naming}
-A complete definition of TCA naming conventions is available at \url{https://192.168.1.221/references/tca-code-guidelines}. It is a subset of the C++-Google Code-Guidelines and differs slightly.
+A complete definition of TCA naming conventions and code-guidelines is available at \url{https://192.168.1.221/references/tca-code-guidelines}. It is a subset of the C++-Google Code-Guidelines and differs slightly.
 
 Here the most important should be listed:
+
+\paragraph{Scoping}
+
+\begin{enumerate}
+	\item Namespaces:
+	\begin{itemize}
+		\item With few exceptions, place code in a namespace. Namespaces should have unique names based on the project name, and possibly its path.
+		\item Namespaces subdivide the global scope into distinct, named scopes, and so are useful for preventing name collisions in the global scope.
+	\end{itemize}
+
+	\item Local Variables:
+	\begin{itemize}
+		\item Place a function's variables in the narrowest scope possible, and initialize variables in the declaration.
+		
+		\begin{minted}{cpp}
+		int i;
+		i = f();      // Bad -- initialization separate from declaration.
+		\end{minted}
+		
+		\begin{minted}{cpp}
+		int j = g();  // Good -- declaration has initialization.
+		\end{minted}
+		
+		\begin{minted}{cpp}
+		// bad
+		std::vector<int> v;
+		v.push_back(1);  // Prefer initializing using brace initialization.
+		v.push_back(2);
+		\end{minted}
+		
+		\begin{minted}{cpp}
+		// good
+		std::vector<int> v = {1, 2};  // Good -- v starts initialized.
+		\end{minted}
+	\end{itemize}
+\end{enumerate}
+
+\paragraph{Classes}
+
+\begin{enumerate}
+	\item Implicit Conversions:
+	\begin{itemize}
+		\item Do not define implicit conversions. Use the explicit keyword for conversion operators and single-argument constructors.
+	\end{itemize}
+	
+\end{enumerate}
 
 \todo{naming conventions}
 \subsection{DO's}
