@@ -3,7 +3,7 @@
 *.out
 *.synctex.gz
 *.toc
-_minted-cpp-intro/
+_minted-cpp-guidelines/
 *.o
 *.swp
 main
