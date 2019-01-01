@@ -40,10 +40,19 @@
 	\item for container types (\url{http://www.cplusplus.com/reference/stl/}), a standard constructor has to be defined. The following would not work:
 	
 	\begin{minipage}[t]{0.4\textwidth}
-		\inputminted{cpp}{src/constructors/ex-1/main.cpp}
+		\inputminted{cpp}{src/constructors/ex-1/ConstructorClassFail.h}
 	\end{minipage}\hfill
 	\begin{minipage}[t]{0.4\textwidth}
+		\inputminted{cpp}{src/constructors/ex-1/main-fail.cpp}		
+	\end{minipage}
+	
+	whereas this works:
+	
+	\begin{minipage}[t]{0.4\textwidth}
 		\inputminted{cpp}{src/constructors/ex-1/ConstructorClass.h}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.4\textwidth}
+		\inputminted{cpp}{src/constructors/ex-1/main.cpp}		
 	\end{minipage}
 
 	\item as soon as dynamic types (pointers) are part of a class, a self-written constructor, copy-constructor \& destructor is advised to handle the pointer data correctly
